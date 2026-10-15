@@ -10,16 +10,19 @@
 struct termios orig_termios;  // estado original do terminal, para repor à saída
 
 /*** terminal ***/
-void die(const char *s) {
+void die(const char *s) 
+{
   perror(s);  // mostra a mensagem de erro do sistema (errno)
   exit(1);
 }
 
-void disableRawMode(void) {
+void disableRawMode(void) 
+{
   if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1) die("tcsetattr");
 }
 
-void enableRawMode(void) {
+void enableRawMode(void) 
+{
   if (tcgetattr(STDIN_FILENO, &orig_termios) == -1) die("tcgetattr");
   atexit(disableRawMode);  // garante que o terminal volta ao normal
 
@@ -35,10 +38,12 @@ void enableRawMode(void) {
 }
 
 /*** init ***/
-int main(void) {
+int main(void) 
+{
   enableRawMode();
 
-  while (1) {
+  while (1)
+  {
     char c = '\0';
     if (read(STDIN_FILENO, &c, 1) == -1 && errno != EAGAIN) die("read");
     if (iscntrl(c)) {
