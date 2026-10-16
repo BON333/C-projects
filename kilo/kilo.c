@@ -1,4 +1,3 @@
-/*** includes ***/
 #include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
@@ -6,10 +5,9 @@
 #include <termios.h>
 #include <unistd.h>
 
-/*** data ***/
 struct termios orig_termios;  // estado original do terminal, para repor à saída
 
-/*** terminal ***/
+// terminal 
 void die(const char *s) 
 {
   perror(s);  // mostra a mensagem de erro do sistema (errno)
@@ -46,9 +44,11 @@ int main(void)
   {
     char c = '\0';
     if (read(STDIN_FILENO, &c, 1) == -1 && errno != EAGAIN) die("read");
-    if (iscntrl(c)) {
+    if (iscntrl(c)) 
+    {
       printf("%d\r\n", c);            // teclas de controlo: só o código
-    } else {
+    } else 
+    {
       printf("%d ('%c')\r\n", c, c);  // teclas normais: código e caractere
     }
     if (c == 'q') break;
